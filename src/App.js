@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {useState} from 'react';
+import Sidebar from './components/Sidebar';
+import Map from './components/Map';
 
 
 
@@ -18,10 +20,9 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={decrementCount}>-</button>
-      <span>{count}</span>
-      <button onClick={incrementCount}>+</button>
-    </div>
+    <Sidebar />
+    <Map />
+  </div>
   );
 }
 

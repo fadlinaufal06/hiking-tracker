@@ -1,4 +1,7 @@
-.Map {
-    flex: 1;
-    background-color: rgb(236, 124, 33);
-  }
+.leaflet-container{
+    height: 100vh;
+}
+
+.Map{
+    flex-direction: row;
+}

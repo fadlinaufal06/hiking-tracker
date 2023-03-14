@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-import Map from './Map'
+import Map from './MyMap'
 
 
 function Homepage() {

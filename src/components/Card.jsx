@@ -1,38 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import "./Card.css";
+import { db } from "../firebase";
+import { get, set, ref, child } from "firebase/database";
+import { uid } from "uid";
 
-function Card() {
-    const [health, setHealth] = useState([]);
-    useEffect(() => {
-    const url = "https://ta-iot.herokuapp.com/";
-    
-    const fetchData = async () => {
-        try {
-            const response = await fetch('https://ta-iot.herokuapp.com/')
-            const data = await response.json()
-            setHealth(data)
-            console.log(data)
-        } catch (err) {
-            console.log("error", err)
-        }
+/**
+  "BAB1EDBD9E7C": {
+    "2023-03-31 08:17:04": {
+      "hr": "110.00",
+      "prediction": "",
+      "pressure": "32.00",
+      "spo2": "77.00"
     }
-    fetchData()
-    },[]);
+  }
 
-
-
-    return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">User</div>
-                <p className="text-gray-700 text-base">
-                    Ini Untuk User Condition
-                </p>
-                </div>
-            <div className="px-6 pt-4 pb-2">
-                <span className="inline-block bg-green-500 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{health.health_check}</span>
-            </div>
+  id: BAB1....
+  health: {
+    "predict": {
+      ...
+    },
+    ...
+  }
+*/
+function Card({ id, health }) {
+  return (
+    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+      <div className=" py-4">
+        <div className="font-bold text-xl mb-2">{id}</div>
+        <p className="text-gray-700 text-base"></p>
+      </div>
+      <p>
+        HR :{" "}
+        {
+          health.predict[
+            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
+          ].hr
+        }
+      </p>
+      <p>  SPO2 :{" "}
+        {
+          health.predict[
+            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
+          ].spo2
+        }</p>
+      <p>Pressure :{" "}
+        {
+          health.predict[
+            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
+          ].pressure
+        }</p>
+      <div className="pt-4 flex items-center justify-end">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          ask user condition
+        </button>
+      </div>
     </div>
-    )
+  );
 }
 
-export default Card
+export default Card;

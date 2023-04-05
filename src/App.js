@@ -4,17 +4,14 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import L from "leaflet";
 import { db } from "./firebase";
 import "./App.css";
-import LeafletGeocoder from "./components/LeafletGeocoder";
 import LeafletRoutingMachine from "./components/LeafletRoutingMachine";
 import Card from "./components/Card";
-import Homepage from "./components/Homepage";
-import Sidebar from "./components/Sidebar";
 import { useEffect } from "react";
 import { useState } from "react";
 import { child, get, ref } from "firebase/database";
 
 function App() {
-  const position = [36.8065, 10.1815];
+  const position = [-6.893215, 107.610277];
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
 
@@ -58,13 +55,34 @@ function App() {
     ])
   );
 
+
+
+
   return (
-    <div>
-      {Object.entries(data).map(([id, health]) => (
-        <Card id={id} health={health} />
-      ))}
+    <div className="container">
+      <div className="sidebar">
+        {Object.entries(data).map(([id, health]) => (
+          <Card id={id} health={health} />
+        ))}
+      </div>
+      <div className="MapContainer">
+        <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        <LeafletRoutingMachine />
+        </MapContainer>
+      </div>
     </div>
   );
 }
+let DefaultIcon = L.icon({
+  iconUrl: "/marker-icon.png",
+  iconSize: [25, 41],
+  iconAnchor: [10, 41],
+  popupAnchor: [2, -40],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default App;

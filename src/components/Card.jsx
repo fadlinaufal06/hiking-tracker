@@ -23,6 +23,7 @@ import { uid } from "uid";
   }
 */
 function Card({ id, health }) {
+ 
   return (
     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
       <div className=" py-4">
@@ -34,7 +35,7 @@ function Card({ id, health }) {
         {
           health.predict[
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].hr
+          ].heartrate
         }
       </p>
       <p>  SPO2 :{" "}
@@ -43,15 +44,15 @@ function Card({ id, health }) {
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
           ].spo2
         }</p>
-      <p>Pressure :{" "}
+      <p>Altitude :{" "}
         {
           health.predict[
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].pressure
+          ].altitude
         }</p>
       <div className="pt-4 flex items-center justify-end">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          ask user condition
+          ask location
         </button>
       </div>
     </div>

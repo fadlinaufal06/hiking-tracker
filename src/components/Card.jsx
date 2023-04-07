@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Card.css";
 import { db } from "../firebase";
 import { get, set, ref, child } from "firebase/database";
 import { uid } from "uid";
@@ -22,8 +21,11 @@ import { uid } from "uid";
     ...
   }
 */
-function Card({ id, health }) {
- 
+function Card({ id, health}) {
+
+  const latitude = health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]].latitude
+  const longitude = health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]].longitude
+
   return (
     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
       <div className=" py-4">
@@ -31,7 +33,7 @@ function Card({ id, health }) {
         <p className="text-gray-700 text-base"></p>
       </div>
       <p>
-        HR :{" "}
+        Heart Rate :{" "}
         {
           health.predict[
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
@@ -50,9 +52,9 @@ function Card({ id, health }) {
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
           ].altitude
         }</p>
-      <div className="pt-4 flex items-center justify-end">
+      <div className="pt-4 flex items-center justify-center">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          ask location
+          view details
         </button>
       </div>
     </div>

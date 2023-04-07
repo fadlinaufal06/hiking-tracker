@@ -9,11 +9,14 @@ import Card from "./components/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import { child, get, ref } from "firebase/database";
+import LeafletMap from "./components/LeafletMap";
 
 function App() {
   const position = [-6.893215, 107.610277];
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,32 +60,22 @@ function App() {
 
 
 
-
   return (
     <div className="container">
       <div className="sidebar">
         {Object.entries(data).map(([id, health]) => (
-          <Card id={id} health={health} />
+          <Card 
+            id={id} 
+            health={health} // Pass longitude as prop  
+          />
         ))}
       </div>
+
       <div className="MapContainer">
-        <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-        <LeafletRoutingMachine />
-        </MapContainer>
+        <LeafletMap/>
       </div>
     </div>
   );
 }
-let DefaultIcon = L.icon({
-  iconUrl: "/marker-icon.png",
-  iconSize: [25, 41],
-  iconAnchor: [10, 41],
-  popupAnchor: [2, -40],
-});
-L.Marker.prototype.options.icon = DefaultIcon;
 
 export default App;

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { db } from "../firebase";
 import { get, set, ref, child } from "firebase/database";
 import { uid } from "uid";
+import { useContext } from "react";
+import { PositionContext } from "./PositionContext";
 
 /**
   "BAB1EDBD9E7C": {
@@ -22,41 +24,34 @@ import { uid } from "uid";
   }
 */
 function Card({ id, health}) {
+  const [currentPosition, setPosition] = useContext(PositionContext)
 
-  const latitude = health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]].latitude
-  const longitude = health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]].longitude
+  const latestReading=   health.readings[
+    Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]
+  ]
 
   return (
-    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
+    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow" onClick={()=>setPosition([latestReading.latitude, latestReading.longitude])}>
       <div className=" py-4">
         <div className="font-bold text-xl mb-2">{id}</div>
         <p className="text-gray-700 text-base"></p>
       </div>
       <p>
-        Heart Rate :{" "}
+        Current User :{" "}
         {
-          health.predict[
-            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].heartrate
+          health.details[
+            Object.keys(health.details).sort((a, b) => (a > b ? -1 : 1))[0]
+          ].name
         }
       </p>
-      <p>  SPO2 :{" "}
+      <p>
+        Health Status :{" "}
         {
           health.predict[
             Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].spo2
-        }</p>
-      <p>Altitude :{" "}
-        {
-          health.predict[
-            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].altitude
-        }</p>
-      <div className="pt-4 flex items-center justify-center">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          view details
-        </button>
-      </div>
+          ].health_prediction
+        }
+      </p>
     </div>
   );
 }

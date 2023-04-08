@@ -4,19 +4,17 @@ import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import L from "leaflet";
 import { db } from "./firebase";
 import "./App.css";
-import LeafletRoutingMachine from "./components/LeafletRoutingMachine";
 import Card from "./components/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import { child, get, ref } from "firebase/database";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import LeafletMap from "./components/LeafletMap";
 
 function App() {
-  const position = [-6.893215, 107.610277];
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-control-geocoder"; // Import the Leaflet Control Geocoder library
+import { PositionContext } from "./PositionContext";
 
 const LeafletMap = () => {
+    const [currentPosition] = useContext(PositionContext)
   useEffect(() => {
-    const map = L.map("map").setView([57.74, 11.94], 13);
+    const map = L.map("map").setView(currentPosition, 20);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors"
@@ -51,7 +53,7 @@ const LeafletMap = () => {
     });
 
     const plan = new ReversablePlan(
-      [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
+      [L.latLng(), L.latLng()],
       {
         geocoder: L.Control.Geocoder.nominatim(), // Use L.Control.Geocoder.nominatim() from the imported library
         routeWhileDragging: true
@@ -66,7 +68,7 @@ const LeafletMap = () => {
     return () => {
       map.remove();
     };
-  }, []);
+  }, [currentPosition]);
 
   return <div id="map" style={{ height: "100%" }}></div>;
 };

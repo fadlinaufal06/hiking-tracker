@@ -9,7 +9,12 @@ const LeafletMap = () => {
   useEffect(() => {
     const map = L.map("map").setView(currentPosition, 20);
 
-    L.marker(currentPosition).addTo(map);
+    const popup = L.popup()
+      .setContent("Popup Content");
+
+    L.marker(currentPosition)
+      .addTo(map)
+      .bindPopup(popup)
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors"

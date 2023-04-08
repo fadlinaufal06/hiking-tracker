@@ -23,6 +23,14 @@ import { PositionContext } from "./PositionContext";
     ...
   }
 */
+
+/*
+ * @typedef Health { details: { [key: string]: any }, predict: { [key: string]: any }, readings: { [key: string]: any } }
+ * @typedef CardParams { id: string, health: Health }
+ * @param {CardParams}
+ */
+
+
 function Card({ id, health}) {
   const [currentPosition, setPosition] = useContext(PositionContext)
 

@@ -56,15 +56,13 @@ function App() {
     ])
   );
 
-
-
   return (
     <div className="container">
       <div className="sidebar">
         {Object.entries(data).map(([id, health]) => (
           <Card 
             id={id} 
-            health={health} // Pass longitude as prop  
+            health={health} 
           />
         ))}
       </div>

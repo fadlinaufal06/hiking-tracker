@@ -9,6 +9,8 @@ const LeafletMap = () => {
   useEffect(() => {
     const map = L.map("map").setView(currentPosition, 20);
 
+    L.marker(currentPosition).addTo(map);
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap contributors"
     }).addTo(map);

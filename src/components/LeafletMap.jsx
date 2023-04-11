@@ -10,7 +10,7 @@ const LeafletMap = () => {
     const map = L.map("map").setView(currentPosition, 20);
 
     const popup = L.popup()
-      .setContent("Popup Content");
+      .setContent("User Condition");
 
     L.marker(currentPosition)
       .addTo(map)

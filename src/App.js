@@ -1,7 +1,5 @@
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
-import L from "leaflet";
 import { db } from "./firebase";
 import "./App.css";
 import Card from "./components/Card";
@@ -10,6 +8,7 @@ import { useState } from "react";
 import { child, get, ref } from "firebase/database";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import LeafletMap from "./components/LeafletMap";
+import Header from "./components/Header";
 
 function App() {
   const [health, setHealth] = useState([]);
@@ -19,10 +18,10 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://ta-iot.herokuapp.com/");
+        const response = await fetch("https://ta-iot.herokuapp.com/currentUserData");
         const data = await response.json();
         setHealth(data);
-        // console.log('fastapi', health)
+        console.log('fastapi', health)
       } catch (err) {
         console.log("error", err);
       }
@@ -44,7 +43,10 @@ function App() {
         console.error(error);
       });
   }, []);
-  console.log("fastapi", health);
+
+  console.log("fastapi before", health);
+  console.log("firebase before", data)
+
   console.log(
     "firebase",
     Object.entries(data),
@@ -59,6 +61,9 @@ function App() {
   return (
     <div className="container">
       <div className="sidebar">
+        <div>
+          <Header/>
+        </div>
         {Object.entries(data).map(([id, health]) => (
           <Card 
             id={id} 

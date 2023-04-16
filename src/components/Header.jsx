@@ -1,7 +1,10 @@
 import React from 'react'
+import PortalExample from './PortalExample';
+import './modal.css'
 
 function Header() {
   return (
+    <>
     <div className='p-6 flex justify-between'>
       {/* Logo */}
       <svg
@@ -30,8 +33,12 @@ function Header() {
         />
       </svg>
       {/* Add User button */}
-      <button className='bg-blue-500 text-white font-bold py-2 px-4 rounded'>Add User</button>
+      <div className="clipping-container">
+        <PortalExample/>
+      </div>
+      
     </div>
+    </>
   );
 }
 

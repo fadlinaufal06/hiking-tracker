@@ -39,7 +39,7 @@
 
 .sidebar {
   flex-shrink: 0;
-  width: 220px;
+  width: 20%;
   height: 100vh;
   overflow: auto;
   position: sticky;

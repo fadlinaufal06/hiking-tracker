@@ -7,7 +7,7 @@ export default function PortalExample() {
   return (
     <>
       <button onClick={() => setShowModal(true)}>
-        Show modal using a portal
+        Add user
       </button>
       {showModal && createPortal(
         <ModalContent onClose={() => setShowModal(false)} />,

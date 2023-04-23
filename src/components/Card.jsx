@@ -4,6 +4,7 @@ import { get, set, ref, child } from "firebase/database";
 import { uid } from "uid";
 import { useContext } from "react";
 import { PositionContext } from "./PositionContext";
+import { ConditionContext } from "./ConditionContext";
 
 /**
   "BAB1EDBD9E7C": {
@@ -33,13 +34,25 @@ import { PositionContext } from "./PositionContext";
 
 function Card({ id, health}) {
   const [currentPosition, setPosition] = useContext(PositionContext)
+  const [condition, setCondition] = useContext(ConditionContext)
 
-  const latestReading=   health.readings[
+  const latestReading=   health.readings && health.readings[
     Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]
   ]
 
+
+  const latestPredict = (health.predict && health.predict[
+    Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
+  ])??{ altitude: "0.00", health_prediction: "Normal", heartrate: "0.00", spo2: "0.00", timestamp: "1970-01-01 00:00:00" }
+
+  console.log(latestPredict, setCondition)
+
   return (
-    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow" onClick={()=>setPosition([latestReading.latitude, latestReading.longitude])}>
+    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow" onClick={()=>{
+      setPosition(latestReading?[latestReading.latitude, latestReading.longitude]:[0,0])
+      setCondition(latestPredict)
+      
+      }}>
       <div className=" py-4">
         <div className="font-bold text-xl mb-2">{id}</div>
         <p className="text-gray-700 text-base"></p>
@@ -47,17 +60,13 @@ function Card({ id, health}) {
       <p>
         Current User :{" "}
         {
-          health.details[
-            Object.keys(health.details).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].name
+          health.details.name
         }
       </p>
       <p>
         Health Status :{" "}
         {
-          health.predict[
-            Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-          ].health_prediction
+          latestPredict.health_prediction
         }
       </p>
     </div>

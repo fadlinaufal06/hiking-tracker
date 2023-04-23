@@ -3,14 +3,26 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-control-geocoder"; // Import the Leaflet Control Geocoder library
 import { PositionContext } from "./PositionContext";
+import ReactDOMServer from "react-dom/server";
+import UserPopup from "./UserPopup";
+import { ConditionContext } from "./ConditionContext";
 
 const LeafletMap = () => {
-    const [currentPosition] = useContext(PositionContext)
+  const [currentPosition] = useContext(PositionContext)
+  const [latestPredict] = useContext(ConditionContext)
+
+  console.log(latestPredict)
+
   useEffect(() => {
     const map = L.map("map").setView(currentPosition, 20);
 
-    const popup = L.popup()
-      .setContent("User Condition");
+    const myComponent = <UserPopup name="User Condition 1" />
+
+    const content = ReactDOMServer.renderToString(myComponent);
+    const popup = L.popup().setContent(content);
+
+    // const popup = L.popup()
+    //   .setContent(latestPredict.heartrate);
 
     L.marker(currentPosition)
       .addTo(map)
@@ -75,7 +87,7 @@ const LeafletMap = () => {
     return () => {
       map.remove();
     };
-  }, [currentPosition]);
+  }, [currentPosition, latestPredict]);
 
   return <div id="map" style={{ height: "100%" }}></div>;
 };

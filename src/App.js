@@ -9,8 +9,12 @@ import { child, get, ref } from "firebase/database";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import LeafletMap from "./components/LeafletMap";
 import Header from "./components/Header";
+import { MapContainer, TileLayer } from "react-leaflet";
+import { useContext } from "react";
+import { PositionContext } from "./components/PositionContext";
 
 function App() {
+  const [currentPosition] = useContext(PositionContext)
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
 
@@ -52,7 +56,7 @@ function App() {
     Object.entries(data),
     Object.entries(data).map(([id, health]) => [
       id,
-      health.predict[
+      health.predict && health.predict[
         Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
       ],
     ])
@@ -73,7 +77,7 @@ function App() {
       </div>
 
       <div className="MapContainer">
-        <LeafletMap/>
+          <LeafletMap/>
       </div>
     </div>
   );

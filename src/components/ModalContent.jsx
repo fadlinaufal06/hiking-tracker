@@ -16,8 +16,6 @@ export default function ModalContent({ onClose }) {
         const database = ref(db,'userdata/'+ chipId + '/details');
         
         
-        // Generate a unique ID for the new user
-        console.log(database)
         // Create a new user object with the form data
         const newUser = {
             name: name,

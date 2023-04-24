@@ -45,7 +45,6 @@ function Card({ id, health}) {
     Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
   ])??{ altitude: "0.00", health_prediction: "Normal", heartrate: "0.00", spo2: "0.00", timestamp: "1970-01-01 00:00:00" }
 
-  console.log(latestPredict, setCondition)
 
   return (
     <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow" onClick={()=>{

@@ -5,6 +5,7 @@ import { uid } from "uid";
 import { useContext } from "react";
 import { PositionContext } from "./PositionContext";
 import { ConditionContext } from "./ConditionContext";
+import { ChipContext, UserContext } from "./ChipContext";
 
 /**
   "BAB1EDBD9E7C": {
@@ -31,45 +32,45 @@ import { ConditionContext } from "./ConditionContext";
  * @param {CardParams}
  */
 
-
-function Card({ id, health}) {
+function Card({ id, health }) {
   const [currentPosition, setPosition] = useContext(PositionContext)
   const [condition, setCondition] = useContext(ConditionContext)
+  const [chipId, setChipId] = useContext(ChipContext)
 
-  const latestReading=   health.readings && health.readings[
-    Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]
-  ]
+  const latestReading =
+    health.readings &&
+    health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]]
 
+  const latestPredict =
+    (health.predict &&
+      health.predict[Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+      altitude: "0.00",
+      health_prediction: "Normal",
+      heartrate: "0.00",
+      spo2: "0.00",
+      timestamp: "1970-01-01 00:00:00",
+    }
 
-  const latestPredict = (health.predict && health.predict[
-    Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]
-  ])??{ altitude: "0.00", health_prediction: "Normal", heartrate: "0.00", spo2: "0.00", timestamp: "1970-01-01 00:00:00" }
-
+  const cardClass = chipId === id ? 'bg-gray-200' : 'bg-white'
 
   return (
-    <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow" onClick={()=>{
-      setPosition(latestReading?[latestReading.latitude, latestReading.longitude]:[0,0])
-      setCondition(latestPredict)
-      
-      }}>
+    <div
+      className={`max-w-sm p-6 border border-gray-200 rounded-lg shadow cursor-pointer ${cardClass}`}
+      onClick={() => {
+        setPosition(latestReading ? [latestReading.latitude, latestReading.longitude] : [0, 0])
+        setCondition(latestPredict)
+        setChipId(id)
+      }}
+    >
       <div className=" py-4">
         <div className="font-bold text-xl mb-2">{id}</div>
         <p className="text-gray-700 text-base"></p>
       </div>
-      <p>
-        Current User :{" "}
-        {
-          health.details.name
-        }
-      </p>
-      <p>
-        Health Status :{" "}
-        {
-          latestPredict.health_prediction
-        }
-      </p>
+      <p>Current User : {health.details.name}</p>
+      <p>Health Status : {latestPredict.health_prediction}</p>
     </div>
-  );
+  )
 }
 
-export default Card;
+export default Card
+

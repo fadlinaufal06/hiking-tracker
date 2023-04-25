@@ -33,7 +33,7 @@ function Header() {
         />
       </svg>
       {/* Add User button */}
-      <div className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
+      <div className="bg-blue-700 text-white font-bold py-2.5 px-4 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
         <PortalExample/>
       </div>
       

@@ -3,3 +3,10 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .list-item {
+    cursor: pointer;
+  }
+  .list-item.active {
+    background-color: #e2e8f0;
+  }

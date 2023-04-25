@@ -56,7 +56,7 @@ function App() {
           <Header/>
         </div>
         {Object.entries(data).map(([id, health]) => (
-          <Card 
+          <Card
             id={id} 
             health={health} 
           />
@@ -65,13 +65,11 @@ function App() {
 
     <MapContainer center={currentPosition} zoom={20} className="MapContainer">
       <Marker position={currentPosition}>
-        <Popup> 
+        <Popup>
           <UserPopup/>
         </Popup>
       </Marker>
-      <TileLayer attribution="© OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png">
-
-      </TileLayer>
+      <TileLayer attribution="© OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
       <LeafletMap/>
     </MapContainer>
 

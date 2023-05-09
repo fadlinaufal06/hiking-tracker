@@ -43,7 +43,7 @@ function UserPopup({ name }) {
       <p>Heart Rate: {latestPredict.heartrate}</p>
       <p>SPO2: {latestPredict.spo2}</p>
       <h2>
-        Health Prediction:{" "}
+        Current Health Status:{" "}
         <span
           className={
             latestPredict.health_prediction === "Fatal"

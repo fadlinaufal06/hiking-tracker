@@ -42,10 +42,10 @@ function Card({ id, health }) {
     health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]]
 
   const latestPredict =
-    (health.predict &&
-      health.predict[Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+    (health.status &&
+      health.status[Object.keys(health.status).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
       altitude: "0.00",
-      health_prediction: "Normal",
+      health_status: "Normal",
       heartrate: "0.00",
       spo2: "0.00",
       timestamp: "1970-01-01 00:00:00",
@@ -67,7 +67,7 @@ function Card({ id, health }) {
         <p className="text-gray-700 text-base"></p>
       </div>
       <p>Current User : {health.details.name}</p>
-      <p>Health Status : {latestPredict.health_prediction}</p>
+      <p>Current Health Status : {latestPredict.health_status}</p>
     </div>
   )
 }

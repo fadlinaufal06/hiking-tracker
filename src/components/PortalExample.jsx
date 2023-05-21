@@ -4,9 +4,12 @@ import ModalContent from './ModalContent';
 
 export default function PortalExample() {
   const [showModal, setShowModal] = useState(false);
+  
   return (
     <>
-      <button onClick={() => setShowModal(true)}>
+      <button onClick={() => {setShowModal(true) 
+      console.log('modal',showModal)}
+     }>
         Manage User
       </button>
       {showModal && createPortal(

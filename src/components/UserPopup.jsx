@@ -90,27 +90,31 @@ function UserPopup({ name }) {
     latestStatus.health_status === "fatal" ? "bg-red-600" : "";
 
   return (
-    <div className={predictClass}>
-      <h1 className="text-lg font-bold mb-2">{chipId}</h1>
-      <p>Altitude: {latestStatus.altitude}</p>
-      <p>Heart Rate: {latestStatus.heartrate}</p>
-      <p>SPO2: {latestStatus.spo2}</p>
-      <h2>
-        Current Health Status:{" "}
-        <span
-          className={
-            latestStatus.health_status === "Fatal"
-              ? "bg-red-600 text-white"
-              : ""
-          }
-        >
-          {latestStatus.health_status}
-        </span>
-      </h2>
+    <div>
+      <h1 className="text-lg font-bold mb-2 text-center">{chipId}</h1>
+      <div className="flex flex-wrap">
+        <div className="w-full md:w-1/2">
+          <p>Altitude: {latestStatus.altitude}</p>
+          <p>Heart Rate: {latestStatus.heartrate}</p>
+        </div>
+        <div className="w-full md:w-1/2">
+          <p>SPO2: {latestStatus.spo2}</p>
+          <p>
+            Current Health Status:{" "}
+            <span
+              className={
+                latestStatus.health_status === "Fatal" ? "bg-red-600 text-white" : ""
+              }
+            >
+              {latestStatus.health_status}
+            </span>
+          </p>
+        </div>
+      </div>
 
 
       <div className="border border-gray-300 rounded-lg shadow-md p-4 my-2">
-        <h3 className="text-lg font-bold mb-2">Prediction :</h3>
+        <h3 className="text-lg font-bold mb-2 text-center">Prediction</h3>
         <p>Predicted Health Status: {latestPrediction.predicted_health_status}</p>
         <p>Altitude at next pos: {latestPrediction.altitude}</p>
         <p>Position: {latestPrediction.pos}</p>
@@ -151,11 +155,11 @@ function UserPopup({ name }) {
 
           <div className="flex mt-2 border border-gray-300 rounded-lg shadow-md">
             <div className="border-r border-gray-300 pr-4">
-              <h3 className="mr-4 font-bold text-center">Lost Confirmation</h3>
+              <h3 className="m-2 font-bold text-center">Lost Confirmation</h3>
               <p className="text-center">{latestPrediction.lost_confirmation === "false" ? "I am On Track" : "I am Lost" }</p>
             </div>
             <div>
-              <h3 className="font-bold text-center">Health Confirmation</h3>
+              <h3 className="m-2 font-bold text-center">Health Confirmation</h3>
               <p className="text-center">{latestPrediction.health_confirmation === "false" ? "Normal" : "I Need Help"}</p>
             </div>
           </div>

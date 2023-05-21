@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { PositionContext } from "./PositionContext";
 import { ConditionContext } from "./ConditionContext";
 import { ChipContext, UserContext } from "./ChipContext";
+import { PredictionContext } from "./PredictionContext";
 
 /**
   "BAB1EDBD9E7C": {
@@ -36,12 +37,13 @@ function Card({ id, health }) {
   const [currentPosition, setPosition] = useContext(PositionContext)
   const [condition, setCondition] = useContext(ConditionContext)
   const [chipId, setChipId] = useContext(ChipContext)
+  const [prediction, setPrediction] = useContext (PredictionContext)
 
   const latestReading =
     health.readings &&
     health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]]
 
-  const latestPredict =
+  const latestStatus =
     (health.status &&
       health.status[Object.keys(health.status).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
       altitude: "0.00",
@@ -50,6 +52,19 @@ function Card({ id, health }) {
       spo2: "0.00",
       timestamp: "1970-01-01 00:00:00",
     }
+  
+  const latestPrediction = 
+    (health.predict &&
+      health.predict[Object.keys(health.predict).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+      altitude: "0.00",
+      health_confirmation:"waiting...",
+      lost_confirmation:"waiting...",
+      lost_prediction:"false",
+      pos: "waiting for data",
+      predicted_health_status: "waiting for data",
+      timestamp: "1970-01-01 00:00:00",
+    }
+  
 
   const cardClass = chipId === id ? 'bg-gray-200' : 'bg-white'
 
@@ -58,16 +73,17 @@ function Card({ id, health }) {
       className={`max-w-sm p-6 border border-gray-200 rounded-lg shadow cursor-pointer ${cardClass}`}
       onClick={() => {
         setPosition(latestReading ? [latestReading.latitude, latestReading.longitude] : [0, 0])
-        setCondition(latestPredict)
+        setCondition(latestStatus)
         setChipId(id)
+        setPrediction(latestPrediction)
       }}
     >
       <div className=" py-4">
         <div className="font-bold text-xl mb-2">{id}</div>
         <p className="text-gray-700 text-base"></p>
       </div>
-      <p>Current User : {health.details.name}</p>
-      <p>Current Health Status : {latestPredict.health_status}</p>
+      { health.details.name && <p>Current User : {health.details.name}</p>}
+      <p>Current Health Status : {latestStatus.health_status}</p>
     </div>
   )
 }

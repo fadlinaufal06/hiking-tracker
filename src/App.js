@@ -5,7 +5,7 @@ import "./App.css";
 import Card from "./components/Card";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { child, get, ref } from "firebase/database";
+import { child, get, ref, onValue } from "firebase/database";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import LeafletMap from "./components/LeafletMap";
 import Header from "./components/Header";
@@ -33,19 +33,36 @@ function App() {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   const dbRef = ref(db);
+  //   get(child(dbRef, `userdata/`))
+  //     .then((snapshot) => {
+  //       if (snapshot.exists()) {
+  //         setData(snapshot.val());
+  //       } else {
+  //         console.log("No data available");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    const dbRef = ref(db);
-    get(child(dbRef, `userdata/`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          setData(snapshot.val());
-        } else {
-          console.log("No data available");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const databaseRef = ref(db, "userdata");
+    const unsubscribe = onValue(databaseRef, (snapshot) => {
+      const userData = snapshot.val();
+      if (userData) {
+        setData(userData);
+      } else {
+        console.log("No data available");
+      }
+    });
+
+    return () => {
+      // Clean up the listener when the component unmounts
+      unsubscribe();
+    };
   }, []);
 
 

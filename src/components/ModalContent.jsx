@@ -51,7 +51,7 @@ export default function ModalContent({ onClose }) {
                 </button>
                 <div className="px-6 py-6 lg:px-8">
 
-                    <h3 className="mb-4 text-xl font-medium text-gray-900">Add new user</h3>
+                    <h3 className="mb-4 text-xl font-medium text-gray-900">Manage User</h3>
 
                     <form className="space-y-10" onSubmit={handleSubmit}>
                         <div>
@@ -73,12 +73,12 @@ export default function ModalContent({ onClose }) {
                         </div>
 
                         <div>
-                            <h3 for="chipid" className="block mb-2 text-sm font-medium text-gray-900 ">Add chip id</h3>
+                            <h3 for="chipid" className="block mb-2 text-sm font-medium text-gray-900 ">Set chip id</h3>
                             <input name="chipid" id="chipid" placeholder="BAB1EDBD9E7C" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required value={chipId} onChange={e => setChipId(e.target.value)}></input>
                         </div>
 
 
-                        <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Add user</button>
+                        <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Set user</button>
                     </form>
 
                 </div>

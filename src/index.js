@@ -7,16 +7,19 @@ import PositionProvider from "./components/PositionContext";
 import ConditionProvider from "./components/ConditionContext";
 import UserProvider from "./components/ChipContext";
 import ChipProvider from "./components/ChipContext";
+import PredictionProvider from "./components/PredictionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ChipProvider>
+      <PredictionProvider>
       <PositionProvider>
         <ConditionProvider>
           <App />
         </ConditionProvider>
       </PositionProvider>
+      </PredictionProvider>
     </ChipProvider>
   </React.StrictMode>
 );

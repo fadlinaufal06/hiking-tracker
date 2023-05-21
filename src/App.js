@@ -13,6 +13,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useContext } from "react";
 import { PositionContext } from "./components/PositionContext";
 import UserPopup from "./components/UserPopup";
+import "tailwindcss/tailwind.css";
 
 function App() {
   const [currentPosition] = useContext(PositionContext)
@@ -67,8 +68,8 @@ function App() {
 
 
   return (
-    <div className="container">
-      <div className="sidebar">
+    <div className="flex h-screen">
+      <div className="w-1/5 h-screen overflow-auto sticky top-0">
         <div>
           <Header/>
         </div>
@@ -80,7 +81,7 @@ function App() {
         ))}
       </div>
 
-    <MapContainer center={currentPosition} zoom={20} className="MapContainer">
+    <MapContainer center={currentPosition} zoom={20} className="flex-1">
       <Marker position={currentPosition}>
         <Popup>
           <UserPopup/>

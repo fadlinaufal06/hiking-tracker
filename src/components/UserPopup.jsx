@@ -1,38 +1,91 @@
 import React, { useState, useEffect } from "react";
 import { PositionContext } from "./PositionContext";
 import { ConditionContext } from "./ConditionContext";
-import { set, ref } from "firebase/database";
+import { set, ref, onValue } from "firebase/database";
 import { useContext } from "react";
-import { db } from "../firebase";
 import { ChipContext } from "./ChipContext";
 import { PredictionContext } from "./PredictionContext";
+import { db } from "../firebase";
 
 function UserPopup({ name }) {
-  const [latestStatus] = useContext(ConditionContext);
+  const [latestStatus, setLatestStatus] = useContext(ConditionContext);
   const [chipId] = useContext(ChipContext);
   const [prediction, setPrediction] = useState(null);
   const [predictionError, setPredictionError] = useState(null);
-  const [latestPrediction] = useContext(PredictionContext);
+  const [latestPrediction, setLatestPrediction] = useContext(PredictionContext);
+  const [confirmed, setConfirmed] = useState(null)
   const [confirmationSent, setConfirmationSent] = useState(false);
+
+
+
+  useEffect(() => {
+    const databaseRef = ref(db, "userdata/"+chipId);
+    const unsubscribe = onValue(databaseRef, (snapshot) => {
+      const userData = snapshot.val();
+      const latestStatus =
+      (userData.status &&
+        userData.status[Object.keys(userData.status).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+        altitude: "0.00",
+        health_status: "Normal",
+        heartrate: "0.00",
+        spo2: "0.00",
+        timestamp: "1970-01-01 00:00:00",
+      }
+    
+    const latestPrediction = 
+      (userData.predict &&
+        userData.predict[Object.keys(userData.predict).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+        altitude: "0.00",
+        health_confirmation:"waiting...",
+        lost_confirmation:"waiting...",
+        lost_prediction:"false",
+        pos: "waiting for data",
+        predicted_health_status: "waiting for data",
+        timestamp: "1970-01-01 00:00:00",
+      }
+
+    const confirmed =
+    (userData.confirm &&
+      userData.confirm[Object.keys(userData.confirm).sort((a, b) => (a > b ? -1 : 1))[0]]) || {
+      health_confirmation:"false",
+      lost_confirmation:"false",
+      lost_detection:"false",
+    }
+    setConfirmed(confirmed)
+    setLatestPrediction(latestPrediction)
+    setLatestStatus(latestStatus) 
+    }
+    
+    );
+
+    return () => {
+      // Clean up the listener when the component unmounts
+      unsubscribe();
+    };
+  }, []);
+
+
 
 
   const handleClickLost = (event) => {
     if (event) {
       event.preventDefault();
     }
-
+    // 2023-05-07 13:00:05
+    const now = new Date()
+    const timestamp = `${now.getFullYear()}-${now.getMonth().toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`
     // Get a reference to the Firebase Realtime Database
     const database = ref(
       db,
       "userdata/" +
         chipId +
-        "/predict/" +
-        latestStatus.timestamp +
-        "/lost_prediction"
+        "/confirm/" +
+        timestamp
     );
+    console.log(chipId)
 
     // Add the new user to the Realtime Database
-    set(database, "true")
+    set(database, {health_confirmation:'false', lost_confirmation:'false', lost_detection:'true'})
       .then(() => {
         // Clear the form data
         setConfirmationSent(true)
@@ -44,6 +97,7 @@ function UserPopup({ name }) {
         console.error("Error adding user to database: ", error);
       });
   };
+
 
   // const handleClickPredict = async () => {
     
@@ -156,11 +210,11 @@ function UserPopup({ name }) {
           <div className="flex mt-2 border border-gray-300 rounded-lg shadow-md">
             <div className="border-r border-gray-300 pr-4">
               <h3 className="m-2 font-bold text-center">Lost Confirmation</h3>
-              <p className="text-center">{latestPrediction.lost_confirmation === "false" ? "I am On Track" : "I am Lost" }</p>
+              <p className="text-center">{confirmed.lost_confirmation === "false" ? "I am On Track" : "I am Lost" }</p>
             </div>
             <div>
               <h3 className="m-2 font-bold text-center">Health Confirmation</h3>
-              <p className="text-center">{latestPrediction.health_confirmation === "false" ? "Normal" : "I Need Help"}</p>
+              <p className="text-center">{confirmed.lost_confirmation === "false" ? "Normal" : "I Need Help"}</p>
             </div>
           </div>
 

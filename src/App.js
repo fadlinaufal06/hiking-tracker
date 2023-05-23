@@ -14,40 +14,16 @@ import { useContext } from "react";
 import { PositionContext } from "./components/PositionContext";
 import UserPopup from "./components/UserPopup";
 import "tailwindcss/tailwind.css";
+import { ConditionContext } from "./components/ConditionContext";
+import { PredictionContext } from "./components/PredictionContext";
 
 function App() {
   const [currentPosition] = useContext(PositionContext)
+  const [currentCondition, setCondition] =  useContext(ConditionContext)
+  const [currentPrediction, setPrediction] = useContext(PredictionContext)
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://ta-iot.herokuapp.com/currentUserData");
-        const data = await response.json();
-        setHealth(data);
-
-      } catch (err) {
-        console.log("error", err);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // useEffect(() => {
-  //   const dbRef = ref(db);
-  //   get(child(dbRef, `userdata/`))
-  //     .then((snapshot) => {
-  //       if (snapshot.exists()) {
-  //         setData(snapshot.val());
-  //       } else {
-  //         console.log("No data available");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   useEffect(() => {
     const databaseRef = ref(db, "userdata");
@@ -65,6 +41,7 @@ function App() {
       unsubscribe();
     };
   }, []);
+
 
 
   return (

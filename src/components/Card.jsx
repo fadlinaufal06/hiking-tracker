@@ -39,6 +39,7 @@ function Card({ id, health }) {
   const [chipId, setChipId] = useContext(ChipContext)
   const [prediction, setPrediction] = useContext (PredictionContext)
 
+
   const latestReading =
     health.readings &&
     health.readings[Object.keys(health.readings).sort((a, b) => (a > b ? -1 : 1))[0]]

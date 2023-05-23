@@ -13,7 +13,9 @@ function UserPopup({ name }) {
   const [prediction, setPrediction] = useState(null);
   const [predictionError, setPredictionError] = useState(null);
   const [latestPrediction, setLatestPrediction] = useContext(PredictionContext);
-  const [confirmed, setConfirmed] = useState(null)
+  const [confirmed, setConfirmed] = useState({health_confirmation:"false",
+  lost_confirmation:"false",
+  lost_detection:"false",})
   const [confirmationSent, setConfirmationSent] = useState(false);
 
 

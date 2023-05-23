@@ -75,7 +75,7 @@ function UserPopup({ name }) {
     }
     // 2023-05-07 13:00:05
     const now = new Date()
-    const timestamp = `${now.getFullYear()}-${now.getMonth().toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`
+    const timestamp = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`
     // Get a reference to the Firebase Realtime Database
     const database = ref(
       db,
@@ -212,11 +212,11 @@ function UserPopup({ name }) {
           <div className="flex mt-2 border border-gray-300 rounded-lg shadow-md">
             <div className="border-r border-gray-300 pr-4">
               <h3 className="m-2 font-bold text-center">Lost Confirmation</h3>
-              <p className="text-center">{confirmed.lost_confirmation === "false" ? "I am On Track" : "I am Lost" }</p>
+              <p className="text-center">{confirmed.lost_confirmation === "true" ?  "I am Lost": "I am On Track" }</p>
             </div>
             <div>
               <h3 className="m-2 font-bold text-center">Health Confirmation</h3>
-              <p className="text-center">{confirmed.lost_confirmation === "false" ? "Normal" : "I Need Help"}</p>
+              <p className="text-center">{confirmed.lost_confirmation === "true" ? "I Need Help": "Normal"}</p>
             </div>
           </div>
 

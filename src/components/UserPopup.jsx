@@ -148,30 +148,34 @@ function UserPopup({ name }) {
   return (
     <div>
       <h1 className="text-lg font-bold mb-2 text-center">{chipId}</h1>
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-1/2">
-          <p>Altitude: {latestStatus.altitude}</p>
-          <p>Heart Rate: {latestStatus.heartrate}</p>
-        </div>
-        <div className="w-full md:w-1/2">
-          <p>SPO2: {latestStatus.spo2}</p>
-          <p>
-            Current Health Status:{" "}
-            <span
-              className={
-                latestStatus.health_status === "Fatal" ? "bg-red-600 text-white" : ""
-              }
-            >
-              {latestStatus.health_status}
-            </span>
-          </p>
+
+      <div className="border border-gray-300 rounded-lg shadow-md p-4 my-2">
+      <h3 className="text-lg font-bold mb-2 text-center">Current Status</h3>
+        <div className="flex flex-wrap">
+          <div className="w-full md:w-1/2">
+            <p>Altitude: {latestStatus.altitude}</p>
+            <p>Heart Rate: {latestStatus.heartrate}</p>
+          </div>
+          <div className="w-full md:w-1/2">
+            <p>SPO2: {latestStatus.spo2}</p>
+            <p>
+              Current Health Status:{" "}
+              <span
+                className={
+                  latestStatus.health_status === "Fatal" ? "bg-red-600 text-white" : ""
+                }
+              >
+                {latestStatus.health_status}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
 
       <div className="border border-gray-300 rounded-lg shadow-md p-4 my-2">
-        <h3 className="text-lg font-bold mb-2 text-center">Prediction</h3>
-        <p>Predicted Health Status: {latestPrediction.predicted_health_status}</p>
+        <h3 className="text-lg font-bold text-center">Status Prediction</h3>
+        <p>Health Status Prediction: {latestPrediction.predicted_health_status}</p>
         <p>Altitude at next pos: {latestPrediction.altitude}</p>
         <p>Position: {latestPrediction.pos}</p>
       </div>

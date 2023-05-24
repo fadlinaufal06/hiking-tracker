@@ -7,6 +7,7 @@ import { PositionContext } from "./PositionContext";
 import { ConditionContext } from "./ConditionContext";
 import { ChipContext, UserContext } from "./ChipContext";
 import { PredictionContext } from "./PredictionContext";
+import PortalExample from "./PortalExample";
 
 /**
   "BAB1EDBD9E7C": {
@@ -73,18 +74,28 @@ function Card({ id, health }) {
     <div
       className={`max-w-sm p-6 border border-gray-200 rounded-lg shadow cursor-pointer ${cardClass}`}
       onClick={() => {
-        setPosition(latestReading ? [latestReading.latitude, latestReading.longitude] : [0, 0])
-        setCondition(latestStatus)
-        setChipId(id)
-        setPrediction(latestPrediction)
+        setPosition(latestReading ? [latestReading.latitude, latestReading.longitude] : [0, 0]);
+        setCondition(latestStatus);
+        setChipId(id);
+        setPrediction(latestPrediction);
       }}
     >
-      <div className=" py-4">
-        <div className="font-bold text-xl mb-2">{id}</div>
-        <p className="text-gray-700 text-base"></p>
+      <div className="flex flex-col h-full">
+        <div className="py-4">
+          <div className="font-bold text-xl mb-2">{id}</div>
+          <p className="text-gray-700 text-base"></p>
+        </div>
+        <div className="flex-grow">
+          {health.details.name && <p>Current User: {health.details.name}</p>}
+          <p>Current Health Status: {latestStatus.health_status}</p>
+        </div>
+        <div className="flex justify-between">
+          <div></div> {/* Empty div for spacing */}
+          <button className="bg-blue-700 mt-2 text-white font-bold py-2.5 px-4 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <PortalExample />
+          </button>
+        </div>
       </div>
-      { health.details.name && <p>Current User : {health.details.name}</p>}
-      <p>Current Health Status : {latestStatus.health_status}</p>
     </div>
   )
 }

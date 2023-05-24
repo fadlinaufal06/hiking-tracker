@@ -4,8 +4,7 @@ import './modal.css'
 
 function Header() {
   return (
-    <>
-    <div className='p-6 flex justify-between'>
+    <div className='p-4 ml-2 flex justify-between items-center'>
       {/* Logo */}
       <svg
         width="48"
@@ -32,13 +31,9 @@ function Header() {
           stroke="black"
         />
       </svg>
-      {/* Add User button */}
-      <div className="bg-blue-700 text-white font-bold py-2.5 px-4 rounded hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-        <PortalExample/>
-      </div>
+     
       
     </div>
-    </>
   );
 }
 

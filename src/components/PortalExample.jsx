@@ -10,7 +10,7 @@ export default function PortalExample() {
       <button onClick={() => {setShowModal(true) 
       console.log('modal',showModal)}
      }>
-        Manage User
+        manage
       </button>
       {showModal && createPortal(
         <ModalContent onClose={() => setShowModal(false)} />,

@@ -9,24 +9,6 @@ import { ChipContext, UserContext } from "./ChipContext";
 import { PredictionContext } from "./PredictionContext";
 import PortalExample from "./PortalExample";
 
-/**
-  "BAB1EDBD9E7C": {
-    "2023-03-31 08:17:04": {
-      "hr": "110.00",
-      "prediction": "",
-      "pressure": "32.00",
-      "spo2": "77.00"
-    }
-  }
-
-  id: BAB1....
-  health: {
-    "predict": {
-      ...
-    },
-    ...
-  }
-*/
 
 /*
  * @typedef Health { details: { [key: string]: any }, predict: { [key: string]: any }, readings: { [key: string]: any } }
@@ -70,6 +52,7 @@ function Card({ id, health }) {
 
   const cardClass = chipId === id ? 'bg-gray-200' : 'bg-white'
 
+  
   return (
     <div
       className={`max-w-sm p-6 border border-gray-200 rounded-lg shadow cursor-pointer ${cardClass}`}

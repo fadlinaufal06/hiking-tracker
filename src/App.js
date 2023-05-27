@@ -16,6 +16,7 @@ import UserPopup from "./components/UserPopup";
 import "tailwindcss/tailwind.css";
 import { ConditionContext } from "./components/ConditionContext";
 import { PredictionContext } from "./components/PredictionContext";
+import { FaSearch } from 'react-icons/fa';
 
 function App() {
   const [currentPosition] = useContext(PositionContext)
@@ -23,6 +24,8 @@ function App() {
   const [currentPrediction, setPrediction] = useContext(PredictionContext)
   const [health, setHealth] = useState([]);
   const [data, setData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(data);
 
 
   useEffect(() => {
@@ -42,6 +45,22 @@ function App() {
     };
   }, []);
 
+  const handleSearch = () => {
+    const filtered = Object.entries(data).filter(([id, health]) => {
+      if (id.toLowerCase().includes(searchQuery.toLowerCase())) {
+        return true;
+      }
+      if (
+        health.details.name &&
+        health.details.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
+        return true;
+      }
+      return false;
+    });
+    setFilteredData(Object.fromEntries(filtered));
+  };
+
 
 
   return (
@@ -50,11 +69,27 @@ function App() {
         <div>
           <Header/>
         </div>
-        {Object.entries(data).map(([id, health]) => (
-          <Card
-            id={id} 
-            health={health} 
-          />
+
+      <div className="relative w-full">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <FaSearch className="h-5 w-5 text-gray-400" />
+        </div>
+        <input
+          type="text"
+          placeholder="Search by id or name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+          className="p-2 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+        {Object.entries(filteredData).map(([id, health]) => (
+          <Card key={id} id={id} health={health} />
         ))}
       </div>
 

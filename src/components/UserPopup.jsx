@@ -10,8 +10,8 @@ import { db } from "../firebase";
 function UserPopup({ name }) {
   const [latestStatus, setLatestStatus] = useContext(ConditionContext);
   const [chipId] = useContext(ChipContext);
-  const [prediction, setPrediction] = useState(null);
-  const [predictionError, setPredictionError] = useState(null);
+  const [prediction, setPrediction] = useState('');
+  const [predictionError, setPredictionError] = useState('');
   const [latestPrediction, setLatestPrediction] = useContext(PredictionContext);
   const [confirmed, setConfirmed] = useState({health_confirmation:"false",
   lost_confirmation:"false",
@@ -216,11 +216,11 @@ function UserPopup({ name }) {
           <div className="flex mt-2 border border-gray-300 rounded-lg shadow-md">
             <div className="border-r border-gray-300 pr-4">
               <h3 className="m-2 font-bold text-center">Lost Confirmation</h3>
-              <p className="text-center">{confirmed.lost_confirmation === "true" ?  "I am Lost": "I am On Track" }</p>
+              <p className="text-center">{confirmed.lost_confirmation === "true" ?  "I am Lost": "I am on track" }</p>
             </div>
             <div>
               <h3 className="m-2 font-bold text-center">Health Confirmation</h3>
-              <p className="text-center">{confirmed.lost_confirmation === "true" ? "I Need Help": "Normal"}</p>
+              <p className="text-center">{confirmed.lost_confirmation === "true" ? "I Need Help": "I am ok"}</p>
             </div>
           </div>
 

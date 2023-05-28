@@ -4,7 +4,7 @@ export const PositionContext = createContext([0, 0])
 
 
 function PositionProvider({children}) {
-    const[position, setPosition] = useState([-6.875801, 107.614795])
+    const[position, setPosition] = useState([-7.474418, 110.399760])
 
   return (
     <PositionContext.Provider value={[position, setPosition]}>{children}</PositionContext.Provider>

@@ -17,12 +17,14 @@ import "tailwindcss/tailwind.css";
 import { ConditionContext } from "./components/ConditionContext";
 import { PredictionContext } from "./components/PredictionContext";
 import { FaSearch } from 'react-icons/fa';
+import { ChipContext } from "./components/ChipContext";
 
 function App() {
   const [currentPosition] = useContext(PositionContext)
   const [currentCondition, setCondition] =  useContext(ConditionContext)
   const [currentPrediction, setPrediction] = useContext(PredictionContext)
   const [health, setHealth] = useState([]);
+  const [chipId] = useContext(ChipContext)
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(data);
@@ -99,12 +101,12 @@ function App() {
       )}
     </div>
 
-    <MapContainer center={currentPosition} zoom={20} className="flex-1">
-      <Marker position={currentPosition}>
+    <MapContainer center={currentPosition} zoom={15} className="flex-1">
+    {chipId && <Marker position={currentPosition}>
         <Popup>
           <UserPopup/>
         </Popup>
-      </Marker>
+      </Marker>}
       <TileLayer attribution="© OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
       <LeafletMap/>
     </MapContainer>
